@@ -19,7 +19,7 @@ param sku object = { name: 'Standard_LRS' }
 
 param containers array = []
 
-resource storage 'Microsoft.Storage/storageAccounts@2022-05-01' = {
+resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: name
   location: location
   tags: tags
@@ -55,4 +55,5 @@ resource storage 'Microsoft.Storage/storageAccounts@2022-05-01' = {
 }
 
 output name string = storage.name
+output id string = storage.id
 output primaryEndpoints object = storage.properties.primaryEndpoints

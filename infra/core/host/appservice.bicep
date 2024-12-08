@@ -8,6 +8,9 @@ param appServicePlanId string
 param keyVaultName string = ''
 param managedIdentity bool = !empty(keyVaultName)
 
+@allowed(['Disabled', 'Enabled'])
+param publicNetworkAccess string = 'Enabled'
+
 // Runtime Properties
 @allowed([
   'dotnet', 'dotnetcore', 'dotnet-isolated', 'node', 'python', 'java', 'powershell', 'custom'
@@ -35,8 +38,9 @@ param scmDoBuildDuringDeployment bool = false
 param use32BitWorkerProcess bool = false
 param ftpsState string = 'FtpsOnly'
 param healthCheckPath string = ''
+param virtualNetworkSubnetId string
 
-resource appService 'Microsoft.Web/sites@2022-03-01' = {
+resource appService 'Microsoft.Web/sites@2022-09-01' = {
   name: name
   location: location
   tags: tags
@@ -57,6 +61,8 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
         allowedOrigins: union([ 'https://portal.azure.com', 'https://ms.portal.azure.com' ], allowedOrigins)
       }
     }
+    virtualNetworkSubnetId: virtualNetworkSubnetId != '' ? virtualNetworkSubnetId : null
+    publicNetworkAccess: publicNetworkAccess
     clientAffinityEnabled: clientAffinityEnabled
     httpsOnly: true
   }
@@ -71,7 +77,8 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
         ENABLE_ORYX_BUILD: string(enableOryxBuild)
       },
       !empty(applicationInsightsName) ? { APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString } : {},
-      !empty(keyVaultName) ? { AZURE_KEY_VAULT_ENDPOINT: keyVault.properties.vaultUri } : {})
+      !empty(keyVaultName) ? { AZURE_KEY_VAULT_ENDPOINT: keyVault.properties.vaultUri } : {}
+      )
   }
 
   resource configLogs 'config' = {
@@ -88,7 +95,7 @@ resource appService 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = if (!(empty(keyVaultName))) {
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = if (!(empty(keyVaultName))) {
   name: keyVaultName
 }
 
@@ -96,6 +103,8 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
   name: applicationInsightsName
 }
 
+
 output identityPrincipalId string = managedIdentity ? appService.identity.principalId : ''
 output name string = appService.name
+output id string = appService.id
 output uri string = 'https://${appService.properties.defaultHostName}'

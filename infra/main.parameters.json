@@ -8,6 +8,12 @@
     "location": {
       "value": "${AZURE_LOCATION}"
     },
+    "resourceGroupName": {
+      "value": "${AZURE_RESOURCE_GROUP}"
+    },
+    "isPrivateNetworkEnabled": {
+      "value": false
+    },
     "principalId": {
       "value": "${AZURE_PRINCIPAL_ID}"
     },
@@ -20,14 +26,56 @@
     "openAiSkuName": {
       "value": "S0"
     },
+    "formRecognizerServiceName": {
+      "value": "${AZURE_FORMRECOGNIZER_SERVICE}"
+    },
+    "formRecognizerResourceGroupName": {
+      "value": "${AZURE_FORMRECOGNIZER_RESOURCE_GROUP}"
+    },
+    "formRecognizerSkuName": {
+      "value": "S0"
+    },
+    "searchServiceName": {
+      "value": "${AZURE_SEARCH_SERVICE}"
+    },
+    "searchServiceResourceGroupName": {
+      "value": "${AZURE_SEARCH_SERVICE_RESOURCE_GROUP}"
+    },
+    "searchServiceSkuName": {
+      "value": "standard"
+    },
     "storageAccountName": {
       "value": "${AZURE_STORAGE_ACCOUNT}"
     },
     "storageResourceGroupName": {
       "value": "${AZURE_STORAGE_RESOURCE_GROUP}"
     },
-    "redisEnterpriseName": {
-      "value": "${AZURE_REDIS_ENTERPRISE_NAME}"
+    "appInsightsInstrumentationKey": {
+      "value": "${AZURE_APPINSIGHTS_INSTRUMENTATION_KEY}"
+    },
+    "principalType": {
+      "value": "${AZURE_PRINCIPAL_TYPE}"
+    },
+    "corsOriginUrl": {
+      "value": "*"
+    },
+    "audienceClientAppId": {
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    },
+    "audienceWebAppId": {
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    },
+    "scopeName": {
+      "value": "chat"
+    },
+    "tenantId": {
+      "value": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    },
+    "aoaiCapacity": {
+      "value": 30
+    },
+    "useApiManagement": {
+      "value": false
     }
   }
 }
